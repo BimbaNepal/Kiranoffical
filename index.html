@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GHANSHYAM OLI — Professional ID Card (Verified)</title>
+  <style>
+    /* VARIABLES based on Nepali Flag Colors - Retaining the professional scheme */
+    :root{
+      --cardW: 100%;
+      --white: #ffffff;
+      --bg: #f9f9f9;
+      --navy: #003893; /* Flag Blue */
+      --red: #dc143c; /* Flag Crimson Red */
+      --muted: #6c7a83;
+      --verified-green: #2ecc71; /* New color for Verified status */
+      --light-blue: #e8f4f8;
+      --shadow: 0 6px 20px rgba(0, 56, 147, 0.1);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex; 
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0; 
+      background: var(--bg);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--navy);
+    }
+    
+    .card {
+      width: 100%; 
+      max-width: 500px; 
+      min-height: 100vh; 
+      background: var(--white);
+      border-radius: 0; 
+      box-shadow: none;
+      overflow: auto; 
+      position: relative;
+    }
+    
+    /* TOP HEADER: Clean Navy Blue */
+    .top {
+      height: 70px;
+      background: linear-gradient(90deg, var(--navy) 0%, #0a4c8a 100%);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      color: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .brand {
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      font-size: 20px;
+      line-height: 1;
+    }
+    
+    .id-badge {
+      background: var(--red); 
+      color: var(--white);
+      padding: 6px 14px;
+      border-radius: 25px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    
+    .body {
+      padding: 25px 20px;
+      position: relative;
+    }
+    
+    /* Name and Details - Moved to the top */
+    .name-section {
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    .name {
+      font-weight: 900;
+      font-size: 30px;
+      color: var(--navy);
+      letter-spacing: 0.5px;
+      line-height: 1.2;
+    }
+    
+    .from {
+      color: var(--muted);
+      margin-top: 5px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    /* Photo Container - Password Size (Smaller) */
+    .photo-container {
+      display: flex;
+      flex-direction: column; /* Stack photo and verified status */
+      align-items: center;
+      margin-bottom: 35px; 
+    }
+    
+    .photo-frame {
+      width: 120px; 
+      height: 150px; 
+      border-radius: 8px;
+      overflow: hidden;
+      border: 4px solid var(--white);
+      box-shadow: var(--shadow);
+      background: linear-gradient(145deg, #e8f0f8, #ffffff);
+      position: relative; /* Needed for the verification badge */
+    }
+    
+    .photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    
+    /* NEW: Verified Status Styling */
+    .verified-status {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        background: var(--verified-green);
+        color: var(--white);
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        box-shadow: 0 2px 5px rgba(46, 204, 113, 0.4);
+    }
+
+    .verified-status::before {
+        content: '✔'; /* Checkmark icon */
+        margin-right: 6px;
+        font-size: 16px;
+        line-height: 1;
+    }
+    /* End of NEW: Verified Status Styling */
+    
+    /* Information Section */
+    .info {
+      padding: 0;
+      background: var(--white);
+      border-radius: 12px;
+    }
+    
+    .line {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 15px 0;
+      margin: 0 20px;
+      border-bottom: 1px solid #e0e6ed;
+      transition: background 0.2s ease;
+    }
+    
+    .line:hover {
+        background: var(--light-blue);
+    }
+    
+    .line:last-child {
+      border-bottom: none;
+    }
+    
+    .label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 4px; 
+    }
+    
+    .val {
+      font-weight: 700;
+      color: var(--navy);
+      font-size: 17px;
+      word-break: break-all;
+    }
+    
+    /* DOB Toggler */
+    .dob-line {
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .dob-line .val {
+        color: var(--red); 
+    }
+
+    .dob-line::after {
+      content: '🔄'; 
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      color: var(--muted);
+    }
+    
+    /* Footer */
+    .footer {
+      padding: 20px;
+      border-top: 1px solid #f1f5f7;
+      background: var(--light-blue); 
+      text-align: center;
+      font-size: 14px;
+      color: var(--navy);
+      margin-top: auto; 
+      font-weight: 600;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="top">
+        <div class="brand">GHANSHYAM OLI</div>
+        <div class="id-badge">ID: NP-597014</div>
+    </div>
+    
+    <div class="body">
+      
+      <div class="name-section">
+        <div class="name">GHANSHYAM OLI</div>
+        <div class="from">Nepal 🇳🇵 | 18 Years Old</div>
+      </div>
+      
+      <div class="photo-container">
+        <div class="photo-frame">
+          <img src="https://i.supaimg.com/c7a565a7-7182-4970-a8a6-3388500d104b.jpg" alt="photo" class="photo" />
+        </div>
+        
+        <div class="verified-status">
+            VERIFIED
+        </div>
+        </div>
+
+      <div class="info">
+        <div class="line dob-line" onclick="toggleDOB()">
+          <div class="label">Date of Birth</div>
+          <div class="val" id="dobVal">September 12, 2007</div>
+        </div>
+        
+        <div class="line">
+          <div class="label">Phone Number</div>
+          <div class="val">+977 9762596912</div>
+        </div>
+        
+        <div class="line">
+          <div class="label">Email Address</div>
+          <div class="val">officalkiran9@gmail.com</div>
+        </div>
+        
+        <div class="line">
+          <div class="label">ID Number</div>
+          <div class="val">NP-597014</div>
+        </div>
+      </div>
+      
+    </div>
+    
+    <div class="footer">
+      <div>Official Identity Verification</div>
+    </div>
+  </div>
+  
+  <script>
+    let englishDOB = "September 12, 2007";
+    let nepaliDOB = "2064 Ashoj 26 (BS)"; 
+    let showingEnglish = true;
+    
+    function toggleDOB(){
+      const el = document.getElementById('dobVal');
+      if(showingEnglish){ 
+        el.textContent = nepaliDOB; 
+        showingEnglish = false; 
+      } else { 
+        el.textContent = englishDOB; 
+        showingEnglish = true; 
+      }
+    }
+  </script>
+</body>
+</html>
