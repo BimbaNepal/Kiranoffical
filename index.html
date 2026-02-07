@@ -1,478 +1,351 @@
 <!DOCTYPE html>
-<html lang="ne">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Fire Topup Center</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <title>Kiran Official Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        /* CSS STYLES - MINIMALIST WHITE & BLUE */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #fce4ec;
-            padding: 15px;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f6; /* Very light grey background */
+            color: #333;
+            margin: 0;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            position: relative;
             min-height: 100vh;
         }
 
-        /* Header Section - Top Right Developer Icon */
-        .header-section {
+        .container {
+            width: 380px;
+            background-color: #ffffff; /* Pure white card */
+            padding: 30px;
+            text-align: center;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05); /* Very soft shadow */
+            box-sizing: border-box;
+        }
+
+        /* Website Title */
+        .site-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0066cc;
+            margin-bottom: 20px;
+        }
+
+        /* Profile Header Section - Banner Slider */
+        .profile-header {
+            margin-bottom: 20px;
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+            border-radius: 16px;
+        }
+
+        .banner-img {
             width: 100%;
-            max-width: 820px;
+            height: 180px;
+            object-fit: cover;
+            border: 1px solid #eee;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .banner-img.active {
+            opacity: 1;
+        }
+
+        /* Date Section */
+        .date-display {
+            font-size: 14px;
+            color: #718096;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Navigation Buttons - Clean Style */
+        .nav-buttons {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            gap: 10px;
         }
 
-        /* Page Title */
-        .page-title {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #d81b60;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            padding-left: 10px;
-        }
-
-        /* Developer Profile Icon - Top Right Corner */
-        .developer-profile {
-            position: relative;
-        }
-
-        .developer-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .nav-btn {
+            background-color: #f0f4f8; /* Light blue-grey */
+            border: none;
+            padding: 12px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            color: #4a5568;
             cursor: pointer;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            border: 3px solid white;
+            font-size: 13px;
+            flex-grow: 1;
+            transition: all 0.3s;
         }
 
-        .developer-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        .nav-btn:hover {
+            background-color: #0066cc; /* Solid blue */
+            color: #fff;
         }
-
-        .developer-btn i {
-            font-size: 28px;
-            color: white;
-        }
-
-        /* Developer Info Card (Hidden by default) */
-        .dev-card {
-            position: absolute;
-            top: 75px;
-            right: 0;
-            width: 320px;
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            z-index: 999;
-            display: none;
-            animation: fadeIn 0.3s ease;
-            border: 2px solid #e91e63;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .dev-card.show {
-            display: block;
-        }
-
-        .dev-header-card {
-            text-align: center;
-            margin-bottom: 20px;
-            font-family: 'Montserrat', sans-serif;
-            color: #d81b60;
-            font-size: 1.5rem;
-            font-weight: 800;
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 10px;
-        }
-
-        .dev-links {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .dev-link-item {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            border-radius: 15px;
-            background: #f8f9fa;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .dev-link-item:hover {
-            background: #e9ecef;
-            transform: translateX(5px);
-        }
-
-        .dev-icon {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            margin-right: 15px;
-            color: white;
-        }
-
-        .dev-facebook { background-color: #1877F2; }
-        .dev-whatsapp { background-color: #25D366; }
-        .dev-tiktok { background-color: #000000; }
-
-        .dev-name {
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: #333;
-        }
-
-        .dev-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #f0f0f0;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-weight: bold;
-            color: #555;
-        }
-
-        .dev-close:hover {
-            background: #e0e0e0;
-        }
-
-        /* Banner Slider */
-        .slider-container {
-            width: 100%;
-            max-width: 820px;
-            aspect-ratio: 820 / 312;
-            position: relative;
-            overflow: hidden;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            margin-bottom: 25px;
-        }
-
-        .slides {
-            display: flex;
-            width: 200%;
-            height: 100%;
-            transition: transform 1s ease-in-out;
-        }
-
-        .slides img { width: 50%; height: 100%; object-fit: cover; }
 
         /* Section Titles */
         .section-title {
-            width: 100%;
-            max-width: 820px;
-            font-size: 1.1rem;
-            margin: 20px 0 10px 0;
-            color: #d81b60;
-            font-weight: bold;
-            border-left: 5px solid #d81b60;
-            padding-left: 10px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: block;
+            color: #2d3748;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: left;
+            display: none; /* Hidden by default */
         }
 
-        /* Grid System */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            width: 100%;
-            max-width: 820px;
+        /* Red Title for Sports News */
+        .red-section-title {
+            color: #e53e3e; /* Bright Red */
+            font-weight: 700;
         }
 
-        .card {
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            padding: 12px;
+        /* Content Box Style */
+        .content-box {
+            background-color: #f0f4f8;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: left;
+            border: 1px solid #e2e8f0;
+            display: none; /* Initially hidden */
+        }
+
+        /* Sports Score Box Specifics */
+        .score-box {
+            background-color: #fff5f5; /* Light red background */
+            border: 1px solid #fed7d7;
+        }
+        
+        .score-header {
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .score-row {
             display: flex;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .team-name {
+            font-weight: 600;
+        }
+        
+        .result-text {
+            color: #38a169; /* Green for winner */
+            font-weight: 600;
+            margin-top: 10px;
+            font-size: 13px;
         }
 
-        .card:hover {
-            border-color: #ff4081;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        /* Social Media Section */
+        .social-icons {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 35px;
         }
 
-        .item-img {
-            width: 45px;
-            height: 45px;
-            margin-right: 12px;
-            object-fit: contain;
-        }
-
-        .info { display: flex; flex-direction: column; }
-        .item-name { font-weight: bold; font-size: 0.95rem; color: #333; }
-        .points { font-size: 0.85rem; color: #666; }
-
-        /* WhatsApp floating button at bottom */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            width: 70px;
-            height: 70px;
-            background-color: #25D366;
+        .icon {
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
+            background-color: #f0f4f8;
             display: flex;
-            align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5);
-            z-index: 100;
+            align-items: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            font-size: 20px;
+            text-decoration: none;
+            color: #4a5568;
+            transition: all 0.3s;
+        }
+        
+        .icon:hover {
+            background-color: #0066cc;
+            color: #fff;
         }
 
-        .whatsapp-float:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.7);
+        /* Contact Section Styles */
+        .contact-box {
+            background-color: #f0f4f8;
+            border-radius: 16px;
+            padding: 20px;
         }
 
-        .whatsapp-float i {
-            font-size: 35px;
-            color: white;
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        @media (max-width: 480px) {
-            .item-name { font-size: 0.85rem; }
-            .points { font-size: 0.75rem; }
-            .item-img { width: 35px; height: 35px; }
-            .dev-card {
-                width: 280px;
-                right: -10px;
-            }
-            .developer-btn {
-                width: 50px;
-                height: 50px;
-            }
-            .developer-btn i {
-                font-size: 24px;
-            }
-            .page-title {
-                font-size: 1.5rem;
-            }
-            .whatsapp-float {
-                width: 60px;
-                height: 60px;
-                bottom: 20px;
-                right: 20px;
-            }
-            .whatsapp-float i {
-                font-size: 30px;
-            }
+        .contact-form input, .contact-form textarea {
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            background-color: #fff;
+            color: #333;
+        }
+
+        .contact-form button {
+            background-color: #0066cc;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            transition: background-color 0.3s;
+        }
+
+        .contact-form button:hover {
+            background-color: #004c99;
         }
     </style>
 </head>
-<body onclick="checkFirstClick()">
+<body onload="showContent('news')"> <div class="container">
+        <div class="site-title">Kiran Official</div>
 
-    <!-- Header Section with Title and Developer Icon -->
-    <div class="header-section">
-        <div class="page-title">🔥 Free Fire Topup</div>
+        <div class="profile-header">
+            <img src="https://i.supaimg.com/b8bd2238-7622-4aaf-9dba-62651c79a281.png" alt="Banner 1" class="banner-img active">
+            <img src="https://i.supaimg.com/ae0d3675-35e4-4b0e-9ec1-0ad00a303bc4.png" alt="Banner 2" class="banner-img">
+        </div>
+
+        <div class="date-display" id="dateDisplay"></div>
+
+        <div class="nav-buttons">
+            <button class="nav-btn" onclick="showContent('news')">NEWS</button>
+            <button class="nav-btn" onclick="showContent('education')">EDUCATION</button>
+            <button class="nav-btn" onclick="showContent('about')">ABOUT</button>
+        </div>
         
-        <div class="developer-profile">
-            <div class="developer-btn" id="devBtn">
-                <i class="fas fa-user-tie"></i>
+        <span class="section-title red-section-title" id="sportsTitle">ICC MEN'S T20 WORLD CUP</span>
+        
+        <div class="content-box score-box" id="newsContent1">
+            <div class="score-header">Group Stage · T20 3 of 55 · Sat, Feb 7</div>
+            <div class="score-row">
+                <span class="team-name">India (IND)</span>
+                <span>161/9 (20)</span>
             </div>
-            
-            <div class="dev-card" id="devCard">
-                <div class="dev-close" id="closeBtn">×</div>
-                <div class="dev-header-card">ABOUT DEVELOPER</div>
-                <div class="dev-links">
-                    <a href="https://www.facebook.com/kiranoffical2" target="_blank" class="dev-link-item">
-                        <div class="dev-icon dev-facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </div>
-                        <div>
-                            <div class="dev-name">Facebook</div>
-                            <div style="font-size: 0.85rem; color: #666;">Kiran Official</div>
-                        </div>
-                    </a>
-                    
-                    <a href="https://wa.me/9779762596912" target="_blank" class="dev-link-item">
-                        <div class="dev-icon dev-whatsapp">
-                            <i class="fab fa-whatsapp"></i>
-                        </div>
-                        <div>
-                            <div class="dev-name">WhatsApp</div>
-                            <div style="font-size: 0.85rem; color: #666;">+977 9762596912</div>
-                        </div>
-                    </a>
-                    
-                    <a href="https://www.tiktok.com/@ghanshyam.oli66?_r=1&_t=ZS-93aShGCSvV1" target="_blank" class="dev-link-item">
-                        <div class="dev-icon dev-tiktok">
-                            <i class="fab fa-tiktok"></i>
-                        </div>
-                        <div>
-                            <div class="dev-name">TikTok</div>
-                            <div style="font-size: 0.85rem; color: #666;">@ghanshyam.oli66</div>
-                        </div>
-                    </a>
-                </div>
+            <div class="score-row">
+                <span class="team-name">USA</span>
+                <span>132/8 (20)</span>
+            </div>
+            <div class="result-text">India won by 29 runs</div>
+        </div>
+        
+        <span class="section-title" id="newsLabel">NEWS</span>
+
+        <div class="content-box score-box" id="newsContent2">
+            <div class="score-header">Group Stage · T20 2 of 55 · Fri, Feb 6</div>
+            <div class="score-row">
+                <span class="team-name">West Indies (WI)</span>
+                <span>182/5 (20)</span>
+            </div>
+            <div class="score-row">
+                <span class="team-name">Scotland (SCO)</span>
+                <span>147 (18.5)</span>
+            </div>
+            <div class="result-text">WI won by 35 runs</div>
+        </div>
+
+        <div class="content-box" id="educationContent">
+            <p>No data found.</p>
+        </div>
+
+        <div class="content-box" id="aboutContent">
+            <div class="social-icons" style="margin-bottom:0;">
+                <a href="https://www.facebook.com/share/1Gd4gCavtx/" target="_blank" class="icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.tiktok.com/@ghanshyam.oli66" target="_blank" class="icon"><i class="fab fa-tiktok"></i></a>
+                <a href="https://wa.me/9779762596912" target="_blank" class="icon"><i class="fab fa-whatsapp"></i></a>
+                <a href="mailto:ghanshyamoli922@gmail.com" class="icon"><i class="far fa-envelope"></i></a>
             </div>
         </div>
-    </div>
 
-    <div class="slider-container">
-        <div class="slides" id="slider">
-            <img src="https://i.supaimg.com/ea107253-3e56-41e2-94a5-fe0af9342d02.jpg" alt="Banner 1">
-            <img src="https://i.supaimg.com/4c978b55-342d-4b3d-bc55-ce2d97297f6d.jpg" alt="Banner 2">
+        <span class="section-title" id="contactTitle" style="display:block;">CONTACT ME</span>
+        <div class="contact-box">
+            <form class="contact-form" onsubmit="handleContact(event)">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" rows="3" required></textarea>
+                <button type="submit">SEND MESSAGE</button>
+            </form>
         </div>
-    </div>
-
-    <div class="section-title">Evo Access & Level Up Pass</div>
-    <div class="grid-container" id="specialGrid"></div>
-
-    <div class="section-title">Diamond Topup List</div>
-    <div class="grid-container" id="diamondGrid"></div>
-
-    <!-- WhatsApp Floating Button -->
-    <div class="whatsapp-float" id="whatsappFloat">
-        <i class="fab fa-whatsapp"></i>
     </div>
 
     <script>
-        const adminWhatsApp = "9762596912";
-        let hasClicked = false;
-        
-        // Developer card functionality
-        const devBtn = document.getElementById('devBtn');
-        const devCard = document.getElementById('devCard');
-        const closeBtn = document.getElementById('closeBtn');
-        const whatsappFloat = document.getElementById('whatsappFloat');
-        
-        // Show developer card
-        devBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            devCard.classList.add('show');
-        });
-        
-        // Close developer card
-        closeBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            devCard.classList.remove('show');
-        });
-        
-        // WhatsApp float button click
-        whatsappFloat.addEventListener('click', function(e) {
-            e.stopPropagation();
-            window.open(`https://wa.me/${adminWhatsApp}`, '_blank');
-        });
-        
-        // Close card when clicking outside
-        document.addEventListener('click', function(e) {
-            if (devCard.classList.contains('show') && 
-                !devCard.contains(e.target) && 
-                !devBtn.contains(e.target)) {
-                devCard.classList.remove('show');
-            }
-        });
+        // JAVASCRIPT - Date Display
+        function displayDate() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('dateDisplay').innerText = now.toLocaleDateString('en-US', options);
+        }
+        displayDate();
 
-        // १. पहिलो क्लिकमा ह्वाट्सएप सोध्ने फङ्सन
-        function checkFirstClick() {
-            if (!hasClicked) {
-                hasClicked = true;
-                if (confirm("के तपाईं मद्दतको लागि WhatsApp Messenger मा जान चाहनुहुन्छ?")) {
-                    window.open(`https://wa.me/${adminWhatsApp}`, '_blank');
-                }
+        // JAVASCRIPT - Banner Slider Animation (5 seconds)
+        let currentBanner = 0;
+        const banners = document.querySelectorAll('.banner-img');
+        function nextBanner() {
+            banners[currentBanner].classList.remove('active');
+            currentBanner = (currentBanner + 1) % banners.length;
+            banners[currentBanner].classList.add('active');
+        }
+        setInterval(nextBanner, 5000);
+
+        // JAVASCRIPT - Content Switching
+        function showContent(section) {
+            // Hide all content boxes
+            document.getElementById('newsContent1').style.display = 'none';
+            document.getElementById('newsContent2').style.display = 'none';
+            document.getElementById('sportsTitle').style.display = 'none';
+            document.getElementById('educationContent').style.display = 'none';
+            document.getElementById('aboutContent').style.display = 'none';
+            document.getElementById('newsLabel').style.display = 'none';
+
+            // Show selected content
+            if (section === 'news') {
+                document.getElementById('newsContent1').style.display = 'block';
+                document.getElementById('newsContent2').style.display = 'block';
+                document.getElementById('sportsTitle').style.display = 'block';
+                document.getElementById('newsLabel').style.display = 'block';
+                document.getElementById('newsLabel').innerText = 'NEWS';
+            } else if (section === 'education') {
+                document.getElementById('educationContent').style.display = 'block';
+            } else if (section === 'about') {
+                document.getElementById('aboutContent').style.display = 'block';
             }
         }
 
-        // २. Slider Logic
-        let currentSlide = 0;
-        setInterval(() => {
-            currentSlide = (currentSlide === 0) ? 1 : 0;
-            document.getElementById('slider').style.transform = `translateX(-${currentSlide * 50}%)`;
-        }, 3500);
-
-        // ३. Special Data (फोटो अनुसार)
-        const specialData = [
-            { name: "Evo Access 7", points: 141 },
-            { name: "Evo Access 30", points: 423 },
-            { name: "Level UP-6", points: 87 },
-            { name: "Level UP-10", points: 87 },
-            { name: "Level UP-15", points: 87 },
-            { name: "Level UP-20", points: 87 },
-            { name: "Level UP-25", points: 87 },
-            { name: "Level UP-30", points: 125 },
-            { name: "Level UP All", points: 521 }
-        ];
-
-        // ४. Diamond Data (साविकको लिस्ट)
-        const diamondData = [
-            { name: "5 Diamonds", points: 19 },
-            { name: "10 Diamonds", points: 29 },
-            { name: "50 Diamonds", points: 99 },
-            { name: "70 Diamonds", points: 149 },
-            { name: "130 Diamonds", points: 249 },
-            { name: "210 Diamonds", points: 399 },
-            { name: "355 Diamonds", points: 649 },
-            { name: "420 Diamonds", points: 749 },
-            { name: "510 Diamonds", points: 899 },
-            { name: "720 Diamonds", points: 1249 },
-            { name: "1080 Diamonds", points: 1999 },
-            { name: "1450 Diamonds", points: 2499 }
-        ];
-
-        // आइकन लिङ्कहरू
-        const specialIcon = "https://i.supaimg.com/a98e470f-34ab-4bc4-981d-ebbb6f23a18d.jpg";
-        const diamondIcon = "https://i.supaimg.com/3ca842ac-e668-4038-a86d-30625143ba17.jpg";
-
-        function renderGrid(data, gridId, icon) {
-            const container = document.getElementById(gridId);
-            data.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
-                    <img src="${icon}" class="item-img" alt="Icon">
-                    <div class="info">
-                        <span class="item-name">${item.name}</span>
-                        <span class="points">${item.points} Rs</span>
-                    </div>
-                `;
-                card.onclick = (e) => {
-                    e.stopPropagation(); // पहिलो क्लिकको विन्डो नखुलोस् भनेर
-                    const msg = `Hello, I want to buy ${item.name} for ${item.points} Rs.`;
-                    window.open(`https://wa.me/${adminWhatsApp}?text=${encodeURIComponent(msg)}`, '_blank');
-                };
-                container.appendChild(card);
-            });
+        // JAVASCRIPT - Contact Form Handling
+        function handleContact(event) {
+            event.preventDefault(); // Prevents page reload
+            alert('Thank you! Your message has been sent.');
+            event.target.reset(); // Clears the form
         }
-
-        // दुवै ग्रिड लोड गर्ने
-        renderGrid(specialData, 'specialGrid', specialIcon);
-        renderGrid(diamondData, 'diamondGrid', diamondIcon);
     </script>
+
 </body>
 </html>
